@@ -10,6 +10,25 @@ class SurveyChoiceItem extends SurveyItem {
     required this.choices,
   }) : super(id: id, question: question, category: category);
 
+  factory SurveyChoiceItem.fromJson(Map<String, dynamic> json) {
+    return SurveyChoiceItem(
+      id: json['id'] as int,
+      question: json['question'] as String,
+      category: SurveyCategory.values[json['category'] as int],
+      choices: json['choices'] as List<String>,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'question': question,
+      'category': category.index,
+      'choices': choices,
+    };
+  }
+
   @override
   List<Object?> get props => [id];
 

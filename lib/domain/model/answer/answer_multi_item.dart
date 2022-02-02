@@ -12,6 +12,24 @@ class AnswerMultiItem extends AnswerItem {
     required this.answerList,
   }) : super(id: id, surveyItemId: surveyItemId, category: category);
 
+  factory AnswerMultiItem.fromJson(Map<String, dynamic> json) {
+    return AnswerMultiItem(
+        id: json['id'] as int,
+        surveyItemId: json['surveyItemId'] as int,
+        category: SurveyCategory.values[json['category'] as int],
+        answerList: json['answerList'] as List<int>);
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'surveyItemId': surveyItemId,
+      'category': category.index,
+      'answerList': answerList,
+    };
+  }
+
   @override
   List<Object?> get props => [id];
 

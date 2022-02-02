@@ -10,6 +10,25 @@ class SurveySliderItem extends SurveyItem {
     required this.step,
   }) : super(id: id, question: question, category: category);
 
+  factory SurveySliderItem.fromJson(Map<String, dynamic> json) {
+    return SurveySliderItem(
+      id: json['id'] as int,
+      question: json['question'] as String,
+      category: SurveyCategory.values[json['category'] as int],
+      step: json['step'] as int,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'question': question,
+      'category': category.index,
+      'step': step,
+    };
+  }
+
   @override
   List<Object?> get props => [id];
 
