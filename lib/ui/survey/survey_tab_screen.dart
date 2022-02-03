@@ -16,7 +16,16 @@ class _SurveyTapScreenState extends State<SurveyTapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Which Jetpack library are you?'),
+        leading: BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          'Which Jetpack library are you?',
+          maxLines: 2,
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
       ),
       body: PageView(
