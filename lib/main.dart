@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:survey_app/ui/survey/survey_tab_screen.dart';
+
+import 'presentation/login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const SurveyTapScreen(),
+      home: const LoginScreen(),
     );
   }
 }

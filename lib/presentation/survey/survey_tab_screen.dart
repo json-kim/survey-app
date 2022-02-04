@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:survey_app/ui/survey/page/calendar_survey.dart';
-import 'package:survey_app/ui/survey/page/checkbox_survey.dart';
-import 'package:survey_app/ui/survey/page/done_survey.dart';
-import 'package:survey_app/ui/survey/page/radio_survey.dart';
+
+import 'page/calendar_survey.dart';
+import 'page/checkbox_survey.dart';
+import 'page/done_survey.dart';
+import 'page/radio_survey.dart';
 
 class SurveyTapScreen extends StatefulWidget {
   const SurveyTapScreen({Key? key}) : super(key: key);

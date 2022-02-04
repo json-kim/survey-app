@@ -1,6 +1,5 @@
 class Member {
-  String id;
-  String password;
+  String email;
 
-  Member(this.id, this.password);
+  Member(this.email);
 }
