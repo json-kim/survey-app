@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:survey_app/core/di/provider_setting.dart';
+import 'package:survey_app/presentation/login/login_view_model.dart';
 
 import 'presentation/login/login_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: globalProviders,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +25,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const LoginScreen(),
+      home: Provider(
+          create: (context) => LoginViewModel(), child: const LoginScreen()),
     );
   }
 }
