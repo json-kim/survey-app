@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:survey_app/domain/model/answer/answer_multi_item.dart';
 import 'package:survey_app/domain/model/answer/answer_single_item.dart';
+import 'package:survey_app/domain/model/survey/survey.dart';
+import 'package:survey_app/domain/model/survey/survey_choice_item.dart';
 import 'package:survey_app/domain/model/survey/survey_item.dart';
 import 'package:survey_app/domain/usecase/load_survey_usecase.dart';
-import 'package:survey_app/domain/usecase/submit_answer_usecase.dart';
-import 'package:survey_app/presentation/survey/answer_builder.dart';
-import 'package:survey_app/presentation/survey/survey_event.dart';
+import 'package:survey_app/domain/usecase/submit_answer_usecaseart';
 import 'package:survey_app/presentation/survey/survey_state.dart';
 
 class SurveyViewModel with ChangeNotifier {
@@ -13,12 +13,10 @@ class SurveyViewModel with ChangeNotifier {
   final LoadSurveyUseCase _loadSurveyUseCase;
 
   SurveyState _state;
-
   SurveyState get state => _state;
 
   SurveyViewModel(this._submitAnswerUseCase, this._loadSurveyUseCase, {email})
       : _state = SurveyState(
-          answerBuilder: AnswerBuilder(),
           email: email,
         ) {
     _loadSurvey();
@@ -26,11 +24,38 @@ class SurveyViewModel with ChangeNotifier {
 
   void onEvent(SurveyEvent event) {
     event.when(
+      loadSurvey: _loadSurvey,
       answerMulti: _answerMulti,
       answerSingle: _answerSingle,
       answerDate: _answerDate,
       answerDone: _submitAnswer,
     );
+  }
+
+  Future<void> _loadSurvey() async {
+    _state = _state.copyWith(isLoading: true);
+    notifyListeners();
+
+    // main surveyId = 1
+    final survey = await _loadSurveyUseCase(1);
+    setAnswerData(survey);
+
+    _state = _state.copyWith(survey: survey, isLoading: false);
+    notifyListeners();
+  }
+
+  void setAnswerData(Survey survey) {
+    final Map<int, dynamic> answerData = {};
+    survey.itemList.forEach((item) {
+      if (item.category == SurveyCategory.checkbox) {
+        answerData[item.id] = List.generate(
+            (item as SurveyChoiceItem).choices.length, (_) => false);
+      } else {
+        answerData[item.id] = 0;
+      }
+    });
+
+    _state = _state.copyWith(answerData: answerData);
   }
 
   void _answerMulti(int itemId, SurveyCategory category, List<int> answers) {
@@ -57,17 +82,6 @@ class SurveyViewModel with ChangeNotifier {
 
   void _answerDate(DateTime date) {
     _state.answerBuilder.addDate(date);
-  }
-
-  Future<void> _loadSurvey() async {
-    _state = _state.copyWith(isLoading: true);
-    notifyListeners();
-
-    // main surveyId = 1
-    final survey = await _loadSurveyUseCase(1);
-
-    _state = _state.copyWith(survey: survey, isLoading: false);
-    notifyListeners();
   }
 
   Future<void> _submitAnswer() async {

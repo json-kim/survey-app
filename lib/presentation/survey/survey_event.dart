@@ -5,6 +5,7 @@ part 'survey_event.freezed.dart';
 
 @freezed
 class SurveyEvent with _$SurveyEvent {
+  const factory SurveyEvent.loadSurvey() = LoadSurvey;
   const factory SurveyEvent.answerMulti(
       int itemId, SurveyCategory category, List<int> answers) = AnswerMulti;
   const factory SurveyEvent.answerSingle(

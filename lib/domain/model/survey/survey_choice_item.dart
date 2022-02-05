@@ -11,11 +11,12 @@ class SurveyChoiceItem extends SurveyItem {
   }) : super(id: id, question: question, category: category);
 
   factory SurveyChoiceItem.fromJson(Map<String, dynamic> json) {
+    final choices = (json['choices'] as List).map((e) => e.toString()).toList();
     return SurveyChoiceItem(
       id: json['id'] as int,
       question: json['question'] as String,
       category: SurveyCategory.values[json['category'] as int],
-      choices: json['choices'] as List<String>,
+      choices: choices,
     );
   }
 

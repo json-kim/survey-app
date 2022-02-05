@@ -9,7 +9,7 @@ class SurveyState with _$SurveyState {
   const factory SurveyState({
     String? email,
     Survey? survey,
-    required AnswerBuilder answerBuilder,
+    @Default({}) answerData,
     @Default(false) isLoading,
   }) = _SurveyState;
 }
