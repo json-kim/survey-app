@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:survey_app/domain/model/answer/answer_multi_item.dart';
 import 'package:survey_app/domain/model/survey/survey_choice_item.dart';
 
 class CheckboxSurvey extends StatelessWidget {
   final SurveyChoiceItem choiceItem;
-  final AnswerMultiItem? answerItem;
-  final void Function() onTap;
+  final List<bool> checkedList;
+  final void Function(bool, int) onTap;
 
   const CheckboxSurvey(
       {required this.choiceItem,
-      this.answerItem,
+      required this.checkedList,
       required this.onTap,
       Key? key})
       : super(key: key);
@@ -20,6 +19,7 @@ class CheckboxSurvey extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               choiceItem.question,
@@ -28,20 +28,11 @@ class CheckboxSurvey extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 itemCount: choiceItem.choices.length,
-                itemBuilder: (context, index) => ListTile(
-                  onTap: () {
-                    choiceItem.id;
-                    index;
-                    choiceItem.category;
-                    answerItem?.answerList.contains(index) ?? false;
-                  },
+                itemBuilder: (context, index) => CheckboxListTile(
+                  onChanged: (value) =>
+                      onTap(value ?? checkedList[index], index),
                   title: Text(choiceItem.choices[index]),
-                  leading: Icon(
-                    answerItem?.answerList.contains(index) ?? false
-                        ? Icons.check_box
-                        : Icons.check_box_outline_blank,
-                    color: Colors.purple,
-                  ),
+                  value: checkedList[index],
                 ),
               ),
             ),

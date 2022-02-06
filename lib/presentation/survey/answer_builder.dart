@@ -10,13 +10,6 @@ class AnswerBuilder {
 
   AnswerBuilder();
 
-  AnswerItem? getAnswerItem(int surveyItemId) {
-    final answerItem =
-        _itemList.where((item) => item.surveyItemId == surveyItemId);
-    if (answerItem.isEmpty) return null;
-    return answerItem.first;
-  }
-
   void addId(int id) {
     _id = id;
   }
@@ -37,13 +30,6 @@ class AnswerBuilder {
     _itemList
         .removeWhere((item) => item.surveyItemId == addedItem.surveyItemId);
     _itemList.add(addedItem);
-  }
-
-  void answerToMultiItem(int surveyItemId, int answer) {
-    final answerItem =
-        _itemList.where((item) => item.surveyItemId == surveyItemId);
-    if (answerItem.isEmpty) {
-    } else {}
   }
 
   Answer buildAnswer() {
